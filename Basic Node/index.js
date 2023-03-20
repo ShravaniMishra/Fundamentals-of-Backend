@@ -12,24 +12,40 @@
 
 const fs = require('fs')
 
-fs.readFile("Basic Node/something.txt",{encoding:"utf-8"},(err,data)=>{
+// fs.readFile("Basic Node/something.txt",{encoding:"utf-8"},(err,data)=>{
+//     if(err){
+//         console.log("Something went wrong")
+//         console.log(err)
+//     }else{
+//         console.log(data)
+//     }
+// })
+
+
+// let data;
+// try{
+//  data = fs.readFileSync("Basic Node/something.txt","utf-8")
+//  console.log(data)
+
+// }catch(err){
+//     console.log("something i can't able to read")
+//     console.log(err)
+// }
+
+
+
+fs.writeFile("Basic Node/something.txt","\n This is my first try \n",(err)=>{
     if(err){
         console.log("Something went wrong")
         console.log(err)
     }else{
-        console.log(data)
+        console.log("Data is successfully written")
     }
 })
 
-
-let data;
 try{
- data = fs.readFileSync("Basic Node/something.txt","utf-8")
- console.log(data)
-
-}catch(err){
-    console.log("something i can't able to read")
+  fs.writeFileSync("Basic Node/something.txt","This is my second try")
+}
+catch(err){
     console.log(err)
 }
-
-
