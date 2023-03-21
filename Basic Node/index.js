@@ -97,7 +97,7 @@ const server = http.createServer((req, res)=>{
 
 })
 server.listen(2500,()=>{
-    console.log("Running at port - 3500")
+    console.log("Running at port - 2500")
 })
 
 
