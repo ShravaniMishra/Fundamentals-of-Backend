@@ -8,9 +8,15 @@ app.get("/",(req,res)=>{
     res.send("Welcome to Database")
 })
 
-app.get("/data",(req,res)=>{
-    console.log(req.body)
-    res.send("Here an having all the data")
+app.get("/data",async(req,res)=>{
+    try{
+    const users=await MovieModel.find()
+    res.send(users)
+    }
+    catch(err){
+        console.log(err)
+    }
+    
 })
 
 app.post("/addData",async(req,res)=>{
@@ -19,6 +25,28 @@ app.post("/addData",async(req,res)=>{
     await movie.save()
     res.send("user can able to post the data") 
 })
+app.patch("/editusers/:userID",async (req,res)=>{
+const userID=req.params.userID
+const payload=req.body
+try{
+const query=await MovieModel.findByIdAndUpdate({_id:userID},payload)
+}catch(err){
+console.log(err)
+res.send({"err":"something went wrong"})
+}
+})
+
+app.delete("/removeuser/:userID",async (req,res)=>{
+const userID=req.params.userID
+try{
+await MovieModel.findByIdAndDelete({_id:userID})
+res.send(`User with user id ${userID} has been deleted from the database`)
+}catch(err){
+console.log(err)
+res.send({"err":"something went wrong"})
+}
+})
+
 
 app.listen(4500,async()=>{
     try{
