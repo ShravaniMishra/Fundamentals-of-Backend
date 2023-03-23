@@ -1,0 +1,10 @@
+const express = require("express")
+
+const app= express()
+
+
+
+
+app.listen(5300,()=>{
+    console.log("Running on port - 5300")
+})
