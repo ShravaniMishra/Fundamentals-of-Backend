@@ -1,6 +1,7 @@
 const express = require("express")
 const {connection} = require(`./Config/db`)
 const {RegisterModel} = require(`./Models/RegisterModel`)
+const jwt = require('jsonwebtoken');
 
 require('dotenv').config()
 const app = express()
@@ -26,14 +27,28 @@ app.post("/register",async(req,res)=>{
 
 app.post("/login",async(req,res)=>{
     const {email,password} = req.body
+    
     try{
         let result = await RegisterModel({email,password})
-        res.send(result)
+        const token = jwt.sign({ course: 'backend' }, 'Masai');
+        res.send({"msg":"Successfully Logged in","token":token})
     }catch(err){
         console.log(err)
     }
 })
 
+app.get("/data",(req,res)=>{
+    const token = req.headers.token
+    console.log(token)
+    jwt.verify(token, 'Masai',(err,decoded)=>{
+        if(err){
+            res.send("Invalid token - please login again")
+            console.log(err)
+        }else{
+            res.send("Data...")
+        }
+    });
+})
 app.listen(process.env.Port, async ()=>{
     try{
         await connection
