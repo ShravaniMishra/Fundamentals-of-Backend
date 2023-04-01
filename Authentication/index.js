@@ -1,6 +1,6 @@
 const express = require("express")
 const {connection} = require(`./Config/db`)
-const {CakeModel} = require(`./Models/CakeModel`)
+const {RegisterModel} = require(`./Models/RegisterModel`)
 
 require('dotenv').config()
 const app = express()
@@ -11,15 +11,25 @@ app.get('/',(req,res)=>{
     res.send("Welcome It's a trial")
 })
 
-app.post("/add",async(req,res)=>{
+app.post("/register",async(req,res)=>{
     try{
-        let cake=req.body
-        let data =new CakeModel(cake)
+        let registers=req.body
+        let data =new RegisterModel(registers)
         await data.save()
         res.send(data)
 
     }
     catch(err){
+        console.log(err)
+    }
+})
+
+app.post("/login",async(req,res)=>{
+    const {email,password} = req.body
+    try{
+        let result = await RegisterModel({email,password})
+        res.send(result)
+    }catch(err){
         console.log(err)
     }
 })
